@@ -1,0 +1,19 @@
+uuid: 9902fb6a-5550-45a1-90d4-823e14c04a6b
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - text
+id: paragraph.field_video_banner_description
+field_name: field_video_banner_description
+entity_type: paragraph
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

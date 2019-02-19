@@ -1,0 +1,59 @@
+<?php
+
+use Drupal\field\Entity\FieldConfig;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\Core\Entity\ContentEntityInterface;
+
+/*
+ * Implements hook_theme().
+ */
+function video_banner_theme() {
+  $theme_templates  = [];
+  $paragraph_types  = video_banner_get_paragraph_types();
+  // Register custom Paragraph bundle templates
+  foreach ($paragraph_types as $paragraph_type){
+    $theme_templates['paragraph__' . $paragraph_type] = [
+      'base hook' => 'paragraph'
+    ];
+  }
+
+  // Register custom Paragraph bundle template fallback
+  $theme_templates['paragraph__'] = [
+    'base hook' => 'paragraph'
+  ];
+  
+  return $theme_templates;
+}
+ 
+/**
+ * Implements hook_theme_registry_alter().
+ * 
+ * Alters the theme suggestions to pick template from custom module.
+ * 
+ */
+function video_banner_theme_registry_alter(&$theme_registry) {
+  $module_path      = drupal_get_path('module', 'video_banner');
+  $template_objects = drupal_find_theme_templates($theme_registry, '.html.twig', $module_path);
+  $paragraph_types  = video_banner_get_paragraph_types();
+
+  foreach ($paragraph_types as $type){
+    $template = 'paragraph__' . $type;
+    if(!isset($template_objects[$template])){
+      unset($theme_registry['paragraph__' . $type]);
+    } else {
+      $theme_registry['paragraph__' . $type]['path'] = $template_objects[$template]['path'];
+    }
+  }
+}
+
+
+/**
+ * Helper function to get a list of paragraph types by machine name
+ *
+ * @return array
+ */
+function video_banner_get_paragraph_types(){
+  $paragraph_bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('paragraph');
+  return array_keys($paragraph_bundles);
+}

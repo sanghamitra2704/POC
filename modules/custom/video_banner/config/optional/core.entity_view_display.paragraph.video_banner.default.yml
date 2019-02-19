@@ -1,0 +1,62 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.video_banner.field_video_banner_description
+    - field.field.paragraph.video_banner.field_video_banner_desktop_thumb
+    - field.field.paragraph.video_banner.field_video_banner_generic_text
+    - field.field.paragraph.video_banner.field_video_banner_mobile_thumb
+    - field.field.paragraph.video_banner.field_video_banner_title
+    - field.field.paragraph.video_banner.field_video_banner_video
+    - paragraphs.paragraphs_type.video_banner
+  module:
+    - file
+    - text
+id: paragraph.video_banner.default
+targetEntityType: paragraph
+bundle: video_banner
+mode: default
+content:
+  field_video_banner_description:
+    weight: 2
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_video_banner_desktop_thumb:
+    weight: 4
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: file_url_plain
+    region: content
+  field_video_banner_generic_text:
+    weight: 3
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_video_banner_mobile_thumb:
+    weight: 5
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: file_url_plain
+    region: content
+  field_video_banner_title:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_video_banner_video:
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: file_url_plain
+    region: content
+hidden: {  }
