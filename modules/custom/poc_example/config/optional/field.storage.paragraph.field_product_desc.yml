@@ -1,0 +1,19 @@
+uuid: 955d6127-32ba-495b-a967-d55f1fc09e00
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - text
+id: paragraph.field_product_desc
+field_name: field_product_desc
+entity_type: paragraph
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

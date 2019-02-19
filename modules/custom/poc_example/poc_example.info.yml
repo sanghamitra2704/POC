@@ -1,0 +1,5 @@
+name: POC custom module
+description: Custom module.
+core: 8.x
+package: POC
+type: module

@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_twig_selection
+    - paragraphs.paragraphs_type.products
+  module:
+    - options
+id: paragraph.products.field_twig_selection
+field_name: field_twig_selection
+entity_type: paragraph
+bundle: products
+label: 'twig selection'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

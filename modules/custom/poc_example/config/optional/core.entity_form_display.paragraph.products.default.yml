@@ -1,0 +1,52 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.products.field_product_desc
+    - field.field.paragraph.products.field_product_image
+    - field.field.paragraph.products.field_product_title
+    - field.field.paragraph.products.field_twig_selection
+    - image.style.thumbnail
+    - paragraphs.paragraphs_type.products
+  module:
+    - image
+    - text
+id: paragraph.products.default
+targetEntityType: paragraph
+bundle: products
+mode: default
+content:
+  field_product_desc:
+    weight: 2
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_product_image:
+    weight: 0
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_product_title:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textfield
+    region: content
+  field_twig_selection:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

@@ -1,0 +1,49 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.products.field_product_desc
+    - field.field.paragraph.products.field_product_image
+    - field.field.paragraph.products.field_product_title
+    - field.field.paragraph.products.field_twig_selection
+    - paragraphs.paragraphs_type.products
+  module:
+    - image
+    - options
+    - text
+id: paragraph.products.default
+targetEntityType: paragraph
+bundle: products
+mode: default
+content:
+  field_product_desc:
+    weight: 2
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_product_image:
+    weight: 0
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_product_title:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_twig_selection:
+    weight: 3
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_key
+    region: content
+hidden: {  }

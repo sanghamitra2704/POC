@@ -1,0 +1,97 @@
+<?php
+
+use Drupal\field\Entity\FieldConfig;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\Core\Entity\ContentEntityInterface;
+
+/**
+ * @file
+ * Drupal hooks.
+ */
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+  function poc_example_field_widget_form_alter(&$element, FormStateInterface $form_state, &$context) {
+    $field_definition = $context['items']->getFieldDefinition();
+  
+    if ($field_definition instanceof FieldConfig) {
+      $config = $field_definition->id();
+      list ($entity_type, $bundle, $field_name) = explode('.', $config);
+  
+      if ($entity_type == 'paragraph' && $field_name == 'field_twig_selection') {
+        $fieldSelection = \Drupal\field\Entity\FieldStorageConfig::loadByName('paragraph', 'field_twig_selection');
+        $fieldSelection->setSetting('allowed_values_function','poc_example_allowed_values_function' );
+        $fieldSelection->save();
+      }
+    }
+  }
+  function poc_example_allowed_values_function(FieldStorageConfig $definition, ContentEntityInterface $entity = NULL, $cacheable) {
+    $directory  = DRUPAL_ROOT . '/' . drupal_get_path('module','poc_example').'/'.'templates/paragraphs/';
+    $fielsList = array_slice(scandir($directory), 2);
+    for ($i = 0; $i < count($fielsList); $i++) {
+      $options[$i+1] = "Template - " . ($i+1);
+    }
+    return $options;
+  }
+  /*
+   * Implements hook_theme().
+  */
+  function poc_example_theme() {
+    $theme_templates  = [];
+    $paragraph_types  = poc_example_get_paragraph_types();
+    // Register custom Paragraph bundle templates
+    foreach ($paragraph_types as $paragraph_type){
+      $theme_templates['paragraph__' . $paragraph_type] = [
+        'base hook' => 'paragraph'
+      ];
+    }
+
+    // Register custom Paragraph bundle template fallback
+    $theme_templates['paragraph__'] = [
+      'base hook' => 'paragraph'
+    ];
+
+    // Register custom Paragraph field wrapper
+    $theme_templates['field__paragraph__poc_example__field_wrapper'] = [
+      'base hook' => 'field',
+    ];
+
+    return $theme_templates;
+   }
+ 
+   /**
+ * Implements hook_theme_registry_alter()
+ */
+function poc_example_theme_registry_alter(&$theme_registry) {
+  $module_path      = drupal_get_path('module', 'poc_example');
+  $template_objects = drupal_find_theme_templates($theme_registry, '.html.twig', $module_path);
+
+  //print_r($template_objects);exit;
+  $paragraph_types  = poc_example_get_paragraph_types();
+
+  // 1. Loop through the paragraph types
+  // 2. Check if each paragraph exists in the `$template_objects` array
+  // 3. If it doesn't exist, remove it from the registry so we don't get any errors
+  // 4. If it does exist, set actual path to template
+  foreach ($paragraph_types as $type){
+    $template = 'paragraph__' . $type;
+    if(!isset($template_objects[$template])){
+      unset($theme_registry['paragraph__' . $type]);
+    } else {
+      $theme_registry['paragraph__' . $type]['path'] = $template_objects[$template]['path'];
+    }
+  }
+}
+
+
+/**
+ * Helper function to get a list of paragraph types by machine name
+ *
+ * @return array
+ */
+function poc_example_get_paragraph_types(){
+  $paragraph_bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('paragraph');
+  return array_keys($paragraph_bundles);
+}

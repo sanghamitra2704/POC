@@ -1,0 +1,33 @@
+uuid: 2fef58ca-513d-4cf7-bb8e-e9258df2aa3f
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_twig_selection
+field_name: field_twig_selection
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: '0'
+      label: paragraph--poc-example.html.twig
+    -
+      value: '1'
+      label: paragraph--products--type-1.html.twig
+    -
+      value: '2'
+      label: paragraph--products--type-2.html.twig
+    -
+      value: '3'
+      label: paragraph--products--type-3.html.twig
+  allowed_values_function: poc_example_allowed_values_function
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
